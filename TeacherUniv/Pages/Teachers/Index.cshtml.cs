@@ -10,7 +10,7 @@ namespace TeacherUniv.Pages.Teachers
 {
     public class IndexModel : PageModel
     {
-        public List<ClientInfo> listClients = new List<ClientInfo>();
+        public List<TeacherInfo> listTeachers = new List<TeacherInfo>();
         public void OnGet()
         {
             try
@@ -19,19 +19,22 @@ namespace TeacherUniv.Pages.Teachers
                 using (SqlConnection connection = new SqlConnection(connectionString))
                 {
                     connection.Open();
-                    string sql= "SELECT * FROM techers";
+                    string sql= "SELECT * FROM teachers";
                     using (SqlCommand command = new SqlCommand(sql,connection))
                     {
                         using (SqlDataReader reader = command.ExecuteReader())
                         {
                             while (reader.Read())
                             {
-                                ClientInfo clientInfo = new ClientInfo();
-                                clientInfo.id = "" + reader.GetInt32(0);
-                                clientInfo.name = reader.GetString(1);
-                                clientInfo.phone = reader.GetString(2);
-                                clientInfo.email = reader.GetString(3);
-                                clientInfo.created_at = reader.GetDateTime(4).ToString();
+                                TeacherInfo teacherInfo = new TeacherInfo();
+                                teacherInfo.id = "" + reader.GetInt32(0);
+                                teacherInfo.name = reader.GetString(1);
+                                teacherInfo.email = reader.GetString(2);
+                                teacherInfo.phone = reader.GetString(3);
+                                teacherInfo.address = reader.GetString(4);
+                                teacherInfo.created_at = reader.GetDateTime(5).ToString();
+
+                                listTeachers.Add(teacherInfo);
                             }
                         }
 
@@ -39,14 +42,14 @@ namespace TeacherUniv.Pages.Teachers
 
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
 
-                throw;
+                Console.WriteLine("Exceptions: " + ex.ToString());
             }
         }
     }
-    public class ClientInfo
+    public class TeacherInfo
     {
         public string id;
         public string name;
@@ -54,6 +57,5 @@ namespace TeacherUniv.Pages.Teachers
         public string phone;
         public string address;
         public string created_at;
-
     }
 }
