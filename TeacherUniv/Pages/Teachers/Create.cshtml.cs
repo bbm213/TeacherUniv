@@ -44,8 +44,8 @@ namespace TeacherUniv.Pages.Teachers
                     using (SqlCommand command= new SqlCommand(sql,connection))
                     {
                         command.Parameters.AddWithValue("@name", teacherInfo.name);
-                        command.Parameters.AddWithValue("@phone", teacherInfo.phone);
                         command.Parameters.AddWithValue("@email", teacherInfo.email);
+                        command.Parameters.AddWithValue("@phone", teacherInfo.phone);
                         command.Parameters.AddWithValue("@address", teacherInfo.address);
 
                         command.ExecuteNonQuery();
